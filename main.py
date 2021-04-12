@@ -5,7 +5,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 
-
 def sendMessage(receiver, title='python自动发送验证短信', file=None):
     # 服务器地址
     smtpserver = 'smtp.163.com'
@@ -52,10 +51,8 @@ i=0
 if __name__ == '__main__':
         i = i+1
         try:
-            message = "服务器 第 "+ str(i) + '次发送'
+            message = "服务器xx 第 "+ str(i) + '次发送'
             sendMessage(file=None, title=message,receiver='1018829104@qq.com')
         except:
             print('发送错误')
 
-        print(message)
-        time.sleep(60)
