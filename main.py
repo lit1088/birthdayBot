@@ -48,11 +48,16 @@ def sendMessage(receiver, title='python自动发送验证短信', file=None):
     smtp.quit()
 
 global i
-i=0
+i=10
 if __name__ == '__main__':
-    i = i+1
-    try:
-        message = "第 "+ str(i) + '次发送'
-        sendMessage(file=None, title=message,receiver='1018829104@qq.com')
-    except:
-        print('发送错误')
+    while i != 0:
+        i = i-1
+        message = "第 " + str(i) + '次发送'
+        try:
+            message = "第 "+ str(i) + '次发送'
+            sendMessage(file=None, title=message,receiver='1018829104@qq.com')
+        except:
+            print('发送错误')
+
+        print(message)
+        time.sleep(60)
