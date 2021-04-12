@@ -6,12 +6,12 @@ name: 'GitHub Actions  Bot'
 # 什么时候执行
 on:
   # 当push的时候
-  push:
+#   push:
 
   # 定时， 这里是国际标准时间
   schedule:
     #  cron表达式，分别对应，分，时，天，月，年
-    - cron: '0 0/1 * * *'
+    - cron: '0/1 * * * *'
 
 # 任务
 jobs:
