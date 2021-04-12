@@ -1,30 +1,58 @@
+# coding:utf-8
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
 
-# 接收者，也就是你的邮箱, 这里我写到list.yml里面去进行设置了
-file = open('list.yml', encoding='utf-8')
-reciver = file.readline().split(':')[1].replace('\n', '')
-# reciver = '2892211452@qq.com'
 
+def sendMessage(receiver, title='python自动发送验证短信', file=None):
+    # 服务器地址
+    smtpserver = 'smtp.163.com'
+    # 发送账号
+    user = '17742566640@163.com'
+    # 发送密码
+    password = 'RLVCOYDEHNRIRRIE'
 
-from 农历生日计算与提醒判断 import 农历birthday
+    # 邮件标题
+    subject = title
 
+    message = MIMEMultipart()
+    # 发送地址
+    message['From'] = user
+    # 接受地址
+    message['To'] = receiver
+    # 邮件标题
+    message['subject'] = subject
+
+    # 02. 添加图片
+    if file:
+        file = open(file, "rb")
+        img_data = file.read()
+        file.close()
+        img = MIMEImage(img_data)
+        img.add_header('Content-ID', 'imageid')
+        content = MIMEText('<html><body><img src="cid:imageid" alt="imageid"></body></html>', 'html', 'utf-8')
+        message.attach(img)
+        # 正文内容
+        message.attach(content)
+
+    smtp = smtplib.SMTP()
+    # 连接服务器
+    smtp.connect(smtpserver)
+    # 登录邮箱账号
+    smtp.login(user, password)
+    # 发送账号信息
+    smtp.sendmail(user, receiver, message.as_string())
+    # 关闭
+    smtp.quit()
+
+global i
+i=0
 if __name__ == '__main__':
-
-    # birthdayList = [
-    #     ['12-25', 'test1']  #第一个是农历生日，第二个是名字
-    # ]
-    birthdayList = []
-
-
-
-    lines =  file.readlines()
-
-    for i in lines:
-        i = i.split(':')
-        try:
-            birthdayList.append([i[0], i[1].replace('\n', '')])
-        except:
-            print(i, ' error')
-
-
-
-    农历birthday.main(list=birthdayList)
+    i = i+1
+    try:
+        message = "第 "+ str(i) + '次发送'
+        sendMessage(file=None, title=message,receiver='1018829104@qq.com')
+    except:
+        print('发送错误')
